@@ -1,4 +1,4 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-ReactDOM.render(<h1>Test</h1>,document.getElementById('board'))
+import {Board} from './Board';
+ReactDOM.render(<Board></Board>,document.getElementById('board'))
