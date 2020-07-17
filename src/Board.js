@@ -27,6 +27,14 @@ export class Board extends React.Component{
     //     );
     // }
     render(){
-        return <Column></Column>;
+        let cols = Array(7);
+        for (let index = 0; index < cols.length; index++) {
+            cols[index]= <Column  key = {index}></Column>;     
+        }
+        return (
+            <div>
+                {cols}
+            </div>
+        );
     } 
 }
