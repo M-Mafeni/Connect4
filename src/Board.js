@@ -23,7 +23,7 @@ export class Board extends React.Component{
     }
     checkWin(){
         let board = this.state.board
-        //check vertical win up
+        //check vertical win
         for(let col = 0; col < 7; col++){
             for(let row = 5; row >= 3; row--){
                 if(board[col][row] !== colors.vacant){
@@ -36,25 +36,55 @@ export class Board extends React.Component{
                 }
             }
         }
-        //check vertical win down
-        //check horizontal win left
-        //check horizontal win right
-        //check diag nw
-        //check diag ne
-        //check diag sw
-        //check diag se
+
+        //check horizontal win
+        for(let col = 0; col<=3; col++){
+            for(let row = 5; row >= 0; row--){
+                if(board[col][row] !== colors.vacant){
+                    let color = board[col][row];
+                    let sameColor = true;
+                    for(let i = 1; i <= 3; i++){
+                        sameColor = sameColor && (color === board[col+i][row])
+                    }
+                    if(sameColor) return true;
+                }
+
+            }
+        }
+        //check diag
+        for(let col = 0; col<= 3; col++){
+            for(let row = 5; row >= 3; row--){
+                if(board[col][row] !== colors.vacant){
+                    let color = board[col][row];
+                    let sameColor = true;
+                    for(let i = 1; i <= 3; i++){
+                        sameColor = sameColor && (color === board[col+i][row-i])
+                    }
+                    if(sameColor) return true;
+                }
+
+            }
+        }
         return false;
     }
     render(){
         // console.log(turn);
         let win = this.checkWin()
         let title = "Connect4"
+        let nextturn = this.state.turn;
+        let myStyle,playerColor,player;
         if(win){
             // let winner
             // console.log(turn);
-            let nextturn = this.state.turn;
-            let val = nextturn ? 2 : 1;
-            title = `Player ${val}  wins`
+            playerColor = nextturn ? "Yellow" : "Red";
+            myStyle = {color: nextturn?"yellow":"red",display:"inline-block"}
+            player = <div style = {myStyle}>{playerColor}</div>; 
+            title = (<h1 className="title">{player} wins</h1>);
+        }else{
+            playerColor = nextturn ? "Red" : "Yellow"
+            myStyle = {color: nextturn?"red":"yellow",display:"inline-block"}
+            player = <div style = {myStyle}>{playerColor}'s</div>;
+            title = (<h1 className="title">{player} turn</h1>);
         }
         let cols = Array(7);
         for (let index = 0; index < cols.length; index++) {
@@ -69,7 +99,7 @@ export class Board extends React.Component{
         }
         return (
             <div>
-                <h1 className="title">{title}</h1>
+                {title}
                 <div>
                     {cols}
                 </div>
