@@ -10,17 +10,20 @@ export class Column extends React.Component{
     }
     handleClick(){
         //starting from the bottom find vacant cell and change its color
-        let cells = this.props.vals;
-        let turn = this.props.turn;
-        for (let index = 5; index >= 0; index--) {
-            if(cells[index]===colors.vacant){
-                cells[index]= turn ? colors.p1: colors.p2;
-                break;
+        if(!(this.props.winner)){
+            let cells = this.props.vals;
+            let turn = this.props.turn;
+            for (let index = 5; index >= 0; index--) {
+                if(cells[index]===colors.vacant){
+                    cells[index]= turn ? colors.p1: colors.p2;
+                    break;
+                }
             }
+            this.props.onClick();
+            // console.log(cells)
+            // this.setState({vals:cells, turn:!turn})
         }
-        this.props.onClick();
-        // console.log(cells)
-        // this.setState({vals:cells, turn:!turn})
+
     }
     render(){
         // console.log(this.props.onClick)

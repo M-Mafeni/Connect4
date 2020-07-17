@@ -17,45 +17,59 @@ export class Board extends React.Component{
     }
 
     handleClick(){
-        //starting from the bottom find vacant cell and change its color
-        // let cells = this.state.vals;
-        // console.log(this.state)
+        
         let turn = this.state.turn;
-        // console.log(this.props )
-        // for (let index = 5; index >= 0; index--) {
-        //     if(cells[index]===colors.vacant){
-        //         cells[index]= turn ? colors.p1: colors.p2;
-        //         break;
-        //     }
-        // }
-        // console.log(cells)
-        // console.log(turn);
-
         this.setState({turn:!turn})
     }
     checkWin(){
-
+        let board = this.state.board
+        //check vertical win up
         for(let col = 0; col < 7; col++){
-            for(let row = 0; row < 6; row++){
-
+            for(let row = 5; row >= 3; row--){
+                if(board[col][row] !== colors.vacant){
+                    let color = board[col][row];
+                    let sameColor = true;
+                    for(let i = 1; i <= 3; i++){
+                        sameColor = sameColor && (color === board[col][row-i])
+                    }
+                    if(sameColor) return true;
+                }
             }
         }
-        return true;
-    }
-    changeTurn(){
-
-        let turn = this.state.turn
-        this.setState({turn:!turn})
+        //check vertical win down
+        //check horizontal win left
+        //check horizontal win right
+        //check diag nw
+        //check diag ne
+        //check diag sw
+        //check diag se
+        return false;
     }
     render(){
+        // console.log(turn);
+        let win = this.checkWin()
+        let title = "Connect4"
+        if(win){
+            // let winner
+            // console.log(turn);
+            let nextturn = this.state.turn;
+            let val = nextturn ? 2 : 1;
+            title = `Player ${val}  wins`
+        }
         let cols = Array(7);
         for (let index = 0; index < cols.length; index++) {
             let vals = this.state.board[index]
-            cols[index]= <Column key = {index} vals={vals} turn={this.state.turn} onClick = {this.handleClick} ></Column>;     
+            cols[index]= <Column 
+                key = {index} 
+                vals={vals} 
+                turn={this.state.turn} 
+                onClick = {this.handleClick}
+                winner = {win} >
+                </Column>;     
         }
         return (
             <div>
-                <h1 className="title">Connect4</h1>
+                <h1 className="title">{title}</h1>
                 <div>
                     {cols}
                 </div>
