@@ -1,5 +1,5 @@
 import React from 'react';
-import {colors} from './Color'
+// import {colors} from './Color'
 
 export class Cell extends React.Component{
     // constructor(props){
