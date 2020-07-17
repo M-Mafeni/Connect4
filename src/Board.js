@@ -1,35 +1,27 @@
 import React from 'react';
 import {Cell} from './Cell';
 import {Column} from './Column';
+import {colors} from './Color'
+
+let turn = true;
 export class Board extends React.Component{
-    makeRow(){
-        let row = Array(7).fill(<Cell/>);
-        console.log(row)
-        return <div className="row">{row}</div>;   
+    constructor(props){
+        super(props);
+        let board = Array(7);
+        for (let index = 0; index < 7; index++) {
+            board[index] = Array(6).fill(colors.vacant); 
+        }
+        this.state = {board:board,turn:turn}
     }
-    // render(){
-    //     let grid = new Array(6);
-    //     for (let i = 0; i < grid.length; i++) {  
-    //         let row = new Array(7);          
-    //         for(let j = 0; j < 7; j++){
-    //             let elem = (
-    //                 <Cell key = {j}/>
-    //             );
-    //             row[j] = elem;
-    //         }
-    //         grid[i] = <div className="row" key = {i}>{row}</div>
-    //     }
-    //     // console.log(row);
-    //     return (
-    //         <div>
-    //             {grid}
-    //         </div>
-    //     );
-    // }
+    changeTurn(){
+        this.setState({turn: !turn});
+        turn = !turn;
+    }
     render(){
         let cols = Array(7);
         for (let index = 0; index < cols.length; index++) {
-            cols[index]= <Column  key = {index}></Column>;     
+            let vals = this.state.board[index]
+            cols[index]= <Column  key = {index} vals={vals} turn={turn}></Column>;     
         }
         return (
             <div>
