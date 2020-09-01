@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
-// import {Cell} from './Cell';
 import {Column} from './Column';
-import {colors} from './Color'
-
+import {colors} from './Color';
 
 export function Board(){
     const [turn,setTurn] = useState(true);
@@ -59,7 +57,6 @@ export function Board(){
         return false;
     }
 
-
     let win = checkWin();
     let title;
     let nextturn = turn;
@@ -88,14 +85,20 @@ export function Board(){
             winner = {win} >
         </Column>;
     }
-
-    // console.log(turn);
     return (
         <div>
             {title}
             <div>
                 {cols}
             </div>
+            <button onClick={()=>{
+                let boardVar = Array(7);
+                for (let index = 0; index < 7; index++) {
+                    boardVar[index] = Array(6).fill(colors.vacant);
+                }
+                setBoard(boardVar);
+            }}>Reset Game</button>
+
         </div>
     );
 
