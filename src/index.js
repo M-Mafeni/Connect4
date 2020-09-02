@@ -4,6 +4,6 @@ import {Board} from './Board';
 ReactDOM.render(
 
     (<div>
-        <Board></Board>
+        <Board/>
     </div>)
     ,document.getElementById('board'));

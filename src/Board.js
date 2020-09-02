@@ -97,6 +97,8 @@ export function Board(){
                     boardVar[index] = Array(6).fill(colors.vacant);
                 }
                 setBoard(boardVar);
+                //reset turn to red's
+                setTurn(true);
             }}>Reset Game</button>
 
         </div>
